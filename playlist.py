@@ -1,5 +1,5 @@
 # coding=utf-8
-from random import choice
+from random import choice, shuffle
 from requests import get
 
 
@@ -10,6 +10,14 @@ def get_video():
     pos = line.index(';')
     video_id, video_name = line[:pos].strip(), line[pos + 1:].strip()
     return video_id, video_name
+
+
+def ultimate_shuffle():
+    """ récupère la liste contenue dans videos.list, mélangée """
+    lines = open('videos.list').read().splitlines()
+    lines = [line[:line.index(';')] for line in lines]
+    shuffle(lines)
+    return lines
 
 
 def add_video(video, name=''):
