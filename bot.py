@@ -41,5 +41,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    from sys import argv
+    n = int(argv[1]) if len(argv) > 1 else 0
     cookies, _ = init()
-    vote_all(get_videos(5), cookies)
+    vote_all(get_videos(n), cookies)
