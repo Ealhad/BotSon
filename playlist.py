@@ -42,10 +42,7 @@ def main() -> None:
 
     if len(argv) > 1:
         video = argv[1]
-        if len(argv) > 2:
-            name = argv[2]
-        else:
-            name = ''
+        name = argv[2] if len(argv) > 2 else ''
         add_video(video, name)
     else:
         print("Pas assez d'arguments !\nArguments : url [nom]")
