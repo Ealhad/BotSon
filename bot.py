@@ -5,6 +5,8 @@ from requests import get, post
 
 from playlist import get_video, ultimate_shuffle
 
+Url = str
+
 
 def init() -> (dict, int):
     """ récupère les cookies de session et le nombre de vidéos dans la file
@@ -14,17 +16,15 @@ def init() -> (dict, int):
     return r.cookies, 42  # TODO
 
 
-def vote(video: str, cookies: dict) -> bool:
-    """ vote pour une vidéo
-    id de la vidéo : https://www.youtube.com/watch?v=<vidéo>
-    """
+def vote(video: Url, cookies: dict) -> bool:
+    """ vote pour une vidéo """
     r = post('https://togethertube.com/api/v1/rooms/salle-de-ballmer/playlist/votes',
-             json={'mediaId': video, 'mediaServiceId': 'youtube'},
+             json={'mediaId': video[video.index('=') + 1:], 'mediaServiceId': 'youtube'},
              cookies=cookies)
     return r.ok
 
 
-def vote_all(videos: List[str], cookie: dict) -> None:
+def vote_all(videos: List[Url], cookie: dict) -> None:
     """ vote pour plusieurs vidéos """
     for video in videos:
         vote(video, cookie)
@@ -35,7 +35,7 @@ def main() -> None:
     video, name = get_video()
     ok = vote(video, cookies)
     if ok:
-        print('Vidéo ajoutée : {0} (https://youtube.com/watch?v={1})'.format(name, video))
+        print('Vidéo ajoutée : {} ({})'.format(name, video))
     else:
         print('Erreur !')
 

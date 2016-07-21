@@ -4,14 +4,16 @@ from typing import List
 
 from requests import get
 
+Url = str
 
-def get_video() -> (str, str):
+
+def get_video() -> Url:
     """ récupère une vidéo au pif dans videos.list """
     lines = open('videos.list').read().splitlines()
     line = choice(lines)
     pos = line.index(';')
     video_id, video_name = line[:pos].strip(), line[pos + 1:].strip()
-    return video_id, video_name
+    return video_id
 
 
 def ultimate_shuffle() -> List[str]:
