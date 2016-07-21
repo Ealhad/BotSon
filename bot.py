@@ -1,10 +1,12 @@
 # coding=utf-8
+from typing import List
+
 from requests import get, post
 
 from playlist import get_video, ultimate_shuffle
 
 
-def init():
+def init() -> (dict, int):
     """ récupère les cookies de session et le nombre de vidéos dans la file
     aucune idée pour l'instant pour le nombre
     """
@@ -12,7 +14,7 @@ def init():
     return r.cookies, 42  # TODO
 
 
-def vote(video, cookies):
+def vote(video: str, cookies: dict) -> bool:
     """ vote pour une vidéo
     id de la vidéo : https://www.youtube.com/watch?v=<vidéo>
     """
@@ -22,13 +24,13 @@ def vote(video, cookies):
     return r.ok
 
 
-def vote_all(videos, cookie):
+def vote_all(videos: List[str], cookie: dict) -> None:
     """ vote pour plusieurs vidéos """
     for video in videos:
         vote(video, cookie)
 
 
-def main():
+def main() -> None:
     cookies, _ = init()
     video, name = get_video()
     ok = vote(video, cookies)

@@ -1,9 +1,11 @@
 # coding=utf-8
 from random import choice, shuffle
+from typing import List
+
 from requests import get
 
 
-def get_video():
+def get_video() -> (str, str):
     """ récupère une vidéo au pif dans videos.list """
     lines = open('videos.list').read().splitlines()
     line = choice(lines)
@@ -12,7 +14,7 @@ def get_video():
     return video_id, video_name
 
 
-def ultimate_shuffle():
+def ultimate_shuffle() -> List[str]:
     """ récupère la liste contenue dans videos.list, mélangée """
     lines = open('videos.list').read().splitlines()
     lines = [line[:line.index(';')] for line in lines]
@@ -20,7 +22,7 @@ def ultimate_shuffle():
     return lines
 
 
-def add_video(video, name=''):
+def add_video(video: str, name: str = '') -> None:
     """ ajoute une vidéo (par URL) à videos.list """
     r = get(video)
     if not r.ok:
@@ -35,7 +37,7 @@ def add_video(video, name=''):
         playlist.write('{0}; {1}\n'.format(video, name))
 
 
-if __name__ == "__main__":
+def main() -> None:
     from sys import argv
 
     if len(argv) > 1:
@@ -47,3 +49,7 @@ if __name__ == "__main__":
         add_video(video, name)
     else:
         print("Pas assez d'arguments !\nArguments : url [nom]")
+
+
+if __name__ == "__main__":
+    main()
