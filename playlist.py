@@ -1,5 +1,5 @@
 # coding=utf-8
-from random import choice, shuffle
+from random import shuffle
 from typing import List
 
 from requests import get
@@ -9,19 +9,15 @@ Url = str
 
 def get_video() -> Url:
     """ récupère une vidéo au pif dans videos.list """
-    lines = open('videos.list').read().splitlines()
-    line = choice(lines)
-    pos = line.index(';')
-    video_id, video_name = line[:pos].strip(), line[pos + 1:].strip()
-    return video_id
+    return get_videos(1)[0]
 
 
-def ultimate_shuffle() -> List[str]:
-    """ récupère la liste contenue dans videos.list, mélangée """
+def get_videos(n: int = 0) -> List[str]:
+    """ récupère une liste mélangée de vidéos tirées de videos.list """
     lines = open('videos.list').read().splitlines()
     lines = [line[:line.index(';')] for line in lines]
     shuffle(lines)
-    return lines
+    return lines if n == 0 else lines[:n]
 
 
 def add_video(video: str, name: str = '') -> None:

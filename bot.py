@@ -3,7 +3,7 @@ from typing import List
 
 from requests import get, post
 
-from playlist import get_video, ultimate_shuffle
+from playlist import get_video, get_videos
 
 Url = str
 
@@ -35,11 +35,11 @@ def main() -> None:
     video, name = get_video()
     ok = vote(video, cookies)
     if ok:
-        print('Vidéo ajoutée : {} ({})'.format(name, video))
+        print("Vidéo ajoutée : {} ({})".format(name, video))
     else:
-        print('Erreur !')
+        print("Erreur !")
 
 
 if __name__ == "__main__":
     cookies, _ = init()
-    vote_all(ultimate_shuffle(), cookies)
+    vote_all(get_videos(5), cookies)
